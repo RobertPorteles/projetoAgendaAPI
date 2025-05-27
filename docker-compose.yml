@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:16
+    container_name: projeto-agendaapi-postgres
+    restart: unless-stopped
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: projetoagendaapi
+      POSTGRES_USER: agendauser
+      POSTGRES_PASSWORD: agendapassword
+    volumes:
+      - agendaapi-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "agendauser"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  agendaapi-db-data:
+ 
